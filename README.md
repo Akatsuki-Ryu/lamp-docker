@@ -1,1 +1,1 @@
-# discuz
+docker compose stack for lamp (linux, apache, mysql, php)
