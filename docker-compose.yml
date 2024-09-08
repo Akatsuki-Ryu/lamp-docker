@@ -34,10 +34,11 @@ services:
       - ./mysql_master.cnf:/etc/mysql/my.cnf
       - ./create_replication_user.sql:/docker-entrypoint-initdb.d/create_replication_user.sql
       - ./mysql_no_ssl.cnf:/etc/mysql/conf.d/disable_ssl.cnf
+      - ./db_scripts/healthcheck.sh:/healthcheck.sh
     restart: always
     command: --server-id=1
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p$$MYSQL_ROOT_PASSWORD"]
+      test: ["CMD", "/healthcheck.sh"]
       interval: 10s
       timeout: 5s
       retries: 5
