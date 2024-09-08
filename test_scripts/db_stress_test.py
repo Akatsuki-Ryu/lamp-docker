@@ -1,4 +1,6 @@
 #  pip install mysql-connector-python
+# need to also open the db port in the docker-compose file
+
 
 import mysql.connector
 import time
