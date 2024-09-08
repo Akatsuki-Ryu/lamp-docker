@@ -1,5 +1,10 @@
+# database data 
 mysql_data
+mysql_replica_data
+
+# html
 html
 
+# other
 .DS_Store
 
