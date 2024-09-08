@@ -3,7 +3,7 @@ services:
   nginx:
     image: nginx:latest
     ports:
-      - "81:80"
+      - "82:80"
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
     depends_on:
@@ -14,8 +14,8 @@ services:
   web1: &web-service
 #    image: php:8.2-apache #check the php version you need for your project
     build: webphp #this line tells docker to build the image from the Dockerfile in the current directory
-    # ports:
-      # - "80:80" #this line maps your pc port to the container port
+    ports:
+      - "80" #this line maps your pc port to the container port
     depends_on:
       - db #this line links this container to the db container
     volumes:
