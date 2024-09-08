@@ -75,11 +75,10 @@ services:
     volumes:
       - ./backups:/backups
       - ./backup.sh:/backup.sh
-      - ./initial_backup.sh:/initial_backup.sh
     environment:
       MYSQL_ROOT_PASSWORD: root_password
     depends_on:
       db:
         condition: service_healthy
-    command: ["/bin/sh", "-c", "chmod +x /backup.sh && chmod +x /initial_backup.sh && /initial_backup.sh && /backup.sh"]
+    command: ["/bin/sh", "-c", "chmod +x /backup.sh && /backup.sh"]
     restart: always
