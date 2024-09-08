@@ -6,23 +6,22 @@ BACKUP_DIR="/backups"
 # Set the database credentials
 DB_USER="root"
 DB_PASS="root_password"
-DB_NAME="lamp_db"
 
-# Function to create a backup
-create_backup() {
+# Function to create backups of all databases
+create_backups() {
     current_date=$(date +"%Y%m%d_%H%M%S")
-    backup_file="$BACKUP_DIR/daily_backup_$current_date.sql"
+    backup_file="$BACKUP_DIR/all_databases_backup_$current_date.sql"
 
-    echo "Creating daily backup..."
-    mysqldump -h db -u"$DB_USER" -p"$DB_PASS" --ssl-mode=DISABLED "$DB_NAME" > "$backup_file"
+    echo "Creating backup of all databases..."
+    mysqldump -h db -u"$DB_USER" -p"$DB_PASS" --ssl-mode=DISABLED --all-databases > "$backup_file"
 
     if [ $? -eq 0 ]; then
-        echo "Daily backup created successfully: $backup_file"
+        echo "Backup of all databases created successfully: $backup_file"
         # Compress the backup
         gzip -f "$backup_file"
         echo "Backup compressed: $backup_file.gz"
     else
-        echo "Error: Daily backup failed"
+        echo "Error: Backup of all databases failed"
         return 1
     fi
 }
@@ -30,14 +29,14 @@ create_backup() {
 # Function to remove old backups (keep last 7 days)
 cleanup_old_backups() {
     echo "Cleaning up old backups..."
-    find "$BACKUP_DIR" -name "daily_backup_*.sql.gz" -type f -mtime +7 -delete
+    find "$BACKUP_DIR" -name "all_databases_backup_*.sql.gz" -type f -mtime +7 -delete
     echo "Cleanup completed"
 }
 
 # Main loop
 while true; do
-    # Create a backup
-    create_backup
+    # Create backups of all databases
+    create_backups
 
     # Clean up old backups
     cleanup_old_backups
