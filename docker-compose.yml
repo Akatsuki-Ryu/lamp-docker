@@ -31,9 +31,9 @@ services:
       MYSQL_DATABASE: lamp_db #you can change the database name here
     volumes:
       - ./mysql_data:/var/lib/mysql #this line maps the content of ./mysql_data in your pc to the /var/lib/mysql of the container
-      - ./mysql_master.cnf:/etc/mysql/my.cnf
-      - ./create_replication_user.sql:/docker-entrypoint-initdb.d/create_replication_user.sql
-      - ./mysql_no_ssl.cnf:/etc/mysql/conf.d/disable_ssl.cnf
+      - ./db_scripts/mysql_master.cnf:/etc/mysql/my.cnf
+      - ./db_scripts/create_replication_user.sql:/docker-entrypoint-initdb.d/create_replication_user.sql
+      - ./db_scripts/mysql_no_ssl.cnf:/etc/mysql/conf.d/disable_ssl.cnf
       - ./db_scripts/healthcheck.sh:/healthcheck.sh
     restart: always
     command: --server-id=1
@@ -50,8 +50,8 @@ services:
       MYSQL_DATABASE: lamp_db
     volumes:
       - ./mysql_replica_data:/var/lib/mysql
-      - ./mysql_replica.cnf:/etc/mysql/my.cnf
-      - ./replica_entrypoint.sh:/docker-entrypoint-initdb.d/replica_entrypoint.sh
+      - ./db_scripts/mysql_replica.cnf:/etc/mysql/my.cnf
+      - ./db_scripts/replica_entrypoint.sh:/docker-entrypoint-initdb.d/replica_entrypoint.sh
     depends_on:
       - db
     restart: always
@@ -75,7 +75,7 @@ services:
     image: mysql:8.0.0
     volumes:
       - ./backups:/backups
-      - ./backup.sh:/backup.sh
+      - ./db_scripts/backup.sh:/backup.sh
     environment:
       MYSQL_ROOT_PASSWORD: root_password
     depends_on:
