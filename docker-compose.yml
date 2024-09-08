@@ -33,8 +33,14 @@ services:
       - ./mysql_data:/var/lib/mysql #this line maps the content of ./mysql_data in your pc to the /var/lib/mysql of the container
       - ./mysql_master.cnf:/etc/mysql/my.cnf
       - ./create_replication_user.sql:/docker-entrypoint-initdb.d/create_replication_user.sql
+      - ./mysql_no_ssl.cnf:/etc/mysql/conf.d/disable_ssl.cnf
     restart: always
     command: --server-id=1
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p$$MYSQL_ROOT_PASSWORD"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   db_replica:
     image: mysql:8.0.0
@@ -62,4 +68,18 @@ services:
     environment:
       PMA_HOST: db
       UPLOAD_LIMIT: 64M
+    restart: always
+
+  db_backup:
+    image: mysql:8.0.0
+    volumes:
+      - ./backups:/backups
+      - ./backup.sh:/backup.sh
+      - ./initial_backup.sh:/initial_backup.sh
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password
+    depends_on:
+      db:
+        condition: service_healthy
+    command: ["/bin/sh", "-c", "chmod +x /backup.sh && chmod +x /initial_backup.sh && /initial_backup.sh && /backup.sh"]
     restart: always
