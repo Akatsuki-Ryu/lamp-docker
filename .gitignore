@@ -9,3 +9,6 @@ html
 .DS_Store
 backups/
 
+# nginx logs
+nginx/logs/
+
