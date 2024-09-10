@@ -111,7 +111,7 @@ services:
       - ./nginx/logs:/var/log/nginx:rw
       - ./goaccess.conf:/etc/goaccess/goaccess.conf:ro
       - ./report:/srv/report
-      - ./GeoLite2-City.mmdb:/usr/local/share/GeoIP/GeoLite2-City.mmdb
+      - ./geoip/GeoLite2-City.mmdb:/usr/local/share/GeoIP/GeoLite2-City.mmdb:ro
     command: >
       /var/log/nginx/access.log
       --config-file=/etc/goaccess/goaccess.conf
@@ -123,4 +123,18 @@ services:
       --tz=Europe/Finland
     depends_on:
       - nginx
+      - geoip_updater
     restart: always
+
+  geoip_updater:
+    image: alpine:latest
+    volumes:
+      - ./geoip/:/usr/share/GeoIP/
+    command: >
+      sh -c "apk add --no-cache wget ca-certificates &&
+             if [ ! -f /usr/share/GeoIP/GeoLite2-City.mmdb ]; then
+               wget -O /usr/share/GeoIP/GeoLite2-City.mmdb 'https://git.io/GeoLite2-City.mmdb' &&
+               chmod 644 /usr/share/GeoIP/GeoLite2-City.mmdb
+             else
+               echo 'GeoLite2-City.mmdb already exists. Skipping download.'
+             fi"
