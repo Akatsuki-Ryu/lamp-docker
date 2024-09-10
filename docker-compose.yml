@@ -114,8 +114,8 @@ services:
       --config-file=/etc/goaccess/goaccess.conf
       --real-time-html
       --port=7890
-      --addr=linux24.tail22dc1.ts.net
-      --ws-url=ws://linux24.tail22dc1.ts.net:7890
+      --addr=0.0.0.0
+      --ws-url=ws://127.0.0.1:7890
       --output=/srv/report/index.html
     depends_on:
       - nginx
