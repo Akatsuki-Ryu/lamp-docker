@@ -111,6 +111,7 @@ services:
       - ./nginx/logs:/var/log/nginx:rw
       - ./goaccess.conf:/etc/goaccess/goaccess.conf:ro
       - ./report:/srv/report
+      - ./GeoLite2-City.mmdb:/usr/local/share/GeoIP/GeoLite2-City.mmdb
     command: >
       /var/log/nginx/access.log
       --config-file=/etc/goaccess/goaccess.conf
