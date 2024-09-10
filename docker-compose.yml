@@ -26,6 +26,8 @@ services:
       - ./html:/var/www/html #this line maps the content of ./html in your pc to the /var/www/html of the container
       - ./webphp/custom.ini:/usr/local/etc/php/conf.d/custom.ini
 #    command: bash -c "docker-php-ext-install mysqli pdo pdo_mysql"
+    environment:
+      - TRUSTED_PROXIES=nginx
     restart: always
 
   db:
