@@ -11,4 +11,4 @@ backups/
 
 # nginx logs
 nginx/logs/
-
+report/
