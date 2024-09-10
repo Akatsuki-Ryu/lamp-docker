@@ -98,3 +98,23 @@ services:
     depends_on:
       - nginx
     restart: always
+
+  goaccess:
+    image: allinurl/goaccess:latest
+    ports:
+      - "7890:7890"
+    volumes:
+      - ./nginx/logs:/var/log/nginx:rw
+      - ./goaccess.conf:/etc/goaccess/goaccess.conf:ro
+      - ./report:/srv/report
+    command: >
+      /var/log/nginx/access.log
+      --config-file=/etc/goaccess/goaccess.conf
+      --real-time-html
+      --port=7890
+      --addr=0.0.0.0
+      --ws-url=ws://localhost:7890
+      --output=/srv/report/index.html
+    depends_on:
+      - nginx
+    restart: always
