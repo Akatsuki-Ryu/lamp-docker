@@ -117,6 +117,7 @@ services:
       --addr=0.0.0.0
       --ws-url=ws://linux24.tail22dc1.ts.net:7890
       --output=/srv/report/index.html
+      --tz=Europe/Finland
     depends_on:
       - nginx
     restart: always
