@@ -93,8 +93,8 @@ services:
       - ./nginx/logs:/var/log/nginx
     environment:
       - LOGS_DIRECTORIES=/var/log/nginx
-      - LOGROTATE_INTERVAL=daily
-      - LOGROTATE_AMOUNT=7
+      - LOGROTATE_INTERVAL=weekly
+      - LOGROTATE_AMOUNT=30
       - LOGROTATE_SIZE=10M
       - LOGROTATE_COMPRESSION=compress
     depends_on:
