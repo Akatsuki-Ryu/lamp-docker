@@ -114,7 +114,6 @@ services:
       - LOGROTATE_INTERVAL=daily
       - LOGROTATE_AMOUNT=30
       - LOGROTATE_SIZE=10M
-      - LOGROTATE_COMPRESSION=compress
     depends_on:
       - nginx
     restart: always
@@ -128,7 +127,6 @@ services:
       - LOGROTATE_INTERVAL=hourly
       - LOGROTATE_AMOUNT=30
       - LOGROTATE_SIZE=10M
-      - LOGROTATE_COMPRESSION=compress
     depends_on:
       - nginx
     restart: always
