@@ -105,7 +105,35 @@ services:
       - nginx
     restart: always
 
-  goaccess:
+  logrotate_daily:
+    image: blacklabelops/logrotate
+    volumes:
+      - ./nginx/logs:/var/log/nginx
+    environment:
+      - LOGS_DIRECTORIES=/var/log/nginx
+      - LOGROTATE_INTERVAL=daily
+      - LOGROTATE_AMOUNT=30
+      - LOGROTATE_SIZE=10M
+      - LOGROTATE_COMPRESSION=compress
+    depends_on:
+      - nginx
+    restart: always
+
+  logrotate_hourly:
+    image: blacklabelops/logrotate
+    volumes:
+      - ./nginx/logs:/var/log/nginx
+    environment:
+      - LOGS_DIRECTORIES=/var/log/nginx
+      - LOGROTATE_INTERVAL=hourly
+      - LOGROTATE_AMOUNT=30
+      - LOGROTATE_SIZE=10M
+      - LOGROTATE_COMPRESSION=compress
+    depends_on:
+      - nginx
+    restart: always
+
+  goaccess_realtime:
     image: allinurl/goaccess:latest
     ports:
       - "7890:7890"
@@ -121,9 +149,30 @@ services:
       --port=7890
       --addr=0.0.0.0
       --ws-url=ws://linux24.tail22dc1.ts.net:7890
-      --output=/srv/report/daily
+      --output=/srv/report/index.html
       --tz=Europe/Finland
-      --daily
+    depends_on:
+      - nginx
+      - geoip_updater
+    restart: always
+
+  goaccess_daily:
+    image: allinurl/goaccess:latest
+    volumes:
+      - ./nginx/logs:/var/log/nginx:rw
+      - ./goaccess.conf:/etc/goaccess/goaccess.conf:ro
+      - ./report:/srv/report
+      - ./geoip/GeoLite2-City.mmdb:/usr/local/share/GeoIP/GeoLite2-City.mmdb:ro
+    command: >
+      /var/log/nginx/access.log
+      --config-file=/etc/goaccess/goaccess.conf
+      --html-report-title="Daily Report"
+      --output=/srv/report/daily.html
+      --date-format=%d/%b/%Y
+      --date-spec=hr
+      --time-format=%H:%M:%S
+      --log-format=COMBINED
+      --tz=Europe/Finland
     depends_on:
       - nginx
       - geoip_updater
