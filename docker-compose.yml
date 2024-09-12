@@ -111,7 +111,7 @@ services:
     ports:
       - "7890:7890"
     volumes:
-      - ./nginx/logs:/var/log/nginx:rw
+      - ./nginx/logs:/var/log/nginx:ro
       - ./goaccess.conf:/etc/goaccess/goaccess.conf:ro
       - ./report:/srv/report
       - ./geoip/GeoLite2-City.mmdb:/usr/local/share/GeoIP/GeoLite2-City.mmdb:ro
