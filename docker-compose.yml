@@ -91,7 +91,7 @@ services:
     command: ["/bin/sh", "-c", "chmod +x /backup.sh && /backup.sh"]
     restart: always
 
-  logrotate:
+  logrotate_weekly:
     image: blacklabelops/logrotate
     volumes:
       - ./nginx/logs:/var/log/nginx
