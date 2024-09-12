@@ -29,7 +29,7 @@ services:
     environment:
       - TRUSTED_PROXIES=nginx
     restart: always
-
+  
   db:
     image: mysql:8.0.0 #check the mysql version you need for your project
     environment:
@@ -61,7 +61,7 @@ services:
     depends_on:
       - db
     restart: always
-    command: 
+    command:
       - --server-id=2
       - --log-bin=mysql-bin
       - --binlog-format=ROW
@@ -121,8 +121,9 @@ services:
       --port=7890
       --addr=0.0.0.0
       --ws-url=ws://linux24.tail22dc1.ts.net:7890
-      --output=/srv/report/index.html
+      --output=/srv/report/daily
       --tz=Europe/Finland
+      --daily
     depends_on:
       - nginx
       - geoip_updater
