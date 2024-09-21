@@ -2,11 +2,17 @@
 mysql_data
 mysql_replica_data
 
+# html data
+html/data/*
 html/data/*.mp4
 html/data/*.MP4
 html/data/*.apk
 html/data/*.zip
 html/data/attachment/forum/*
+html/data/attachment/image/*
+html/data/avatar/*
+html/data/cache/*
+html/data/log/*
 
 
 
