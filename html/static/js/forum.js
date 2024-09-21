@@ -236,6 +236,7 @@ function fastpostvalidate(theform, noajaxpost) {
 			return false;
 		}
 	}
+	//theform.message.value = theform.message.value.replace(' ', "");
 	if(theform.message.value == '' || theform.subject.value == '') {
 		s = '抱歉，您尚未输入标题或内容';
 		theform.message.focus();
@@ -247,6 +248,33 @@ function fastpostvalidate(theform, noajaxpost) {
 		showError('您的标题长度不符合要求。\n\n当前长度: ' + dstrlen(theform.subject.value) + ' 字\n系统限制: ' + postminsubjectchars + ' 到 ' + postmaxsubjectchars + ' 字');
 		return false;
 	}
+		
+	//find out if the message is fully english or not
+	var containsEnglish = true;
+	var message = theform.message.value;
+	for (var i = 0; i < message.length; i++) {
+		if (message.charCodeAt(i) > 127) {
+			containsEnglish = false;
+		} else {
+			containsEnglish = true;
+		}
+	}
+	if (containsEnglish) {
+		//check if the content is a sentence or nonsense
+		var words = message.split(' ');
+		var wordCount = 0;
+		for (var i = 0; i < words.length; i++) {
+			if (words[i].length > 1) {
+				wordCount++;
+			}
+
+		}
+		if (wordCount < 5) {
+			s = '请老板不要回复纯字母的内容，鞠躬';
+		}
+		//otherwise it is a sentence in english, which is ok.
+	}
+
 	if(!disablepostctrl && ((postminchars != 0 && mb_strlen(theform.message.value) < postminchars) || (postmaxchars != 0 && mb_strlen(theform.message.value) > postmaxchars))) {
 		s = '您的帖子长度不符合要求。\n\n当前长度: ' + mb_strlen(theform.message.value) + ' ' + '字节\n系统限制: ' + postminchars + ' 到 ' + postmaxchars + ' 字节';
 	}
