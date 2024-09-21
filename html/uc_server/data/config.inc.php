@@ -1,0 +1,21 @@
+<?php 
+define('UC_DBHOST', 'db');
+define('UC_DBUSER', 'root');
+define('UC_DBPW', 'root_password');
+define('UC_DBNAME', 'ultrax');
+define('UC_DBCHARSET', 'utf8mb4');
+define('UC_DBTABLEPRE', 'pre_ucenter_');
+define('UC_COOKIEPATH', '/');
+define('UC_COOKIEDOMAIN', '');
+define('UC_DBCONNECT', 0);
+define('UC_CHARSET', 'utf-8');
+define('UC_FOUNDERPW', '$2y$10$0zwoPTVov4Ek38hrHtEEAuPvbePFE5eJhuktrScaRn9fe4DyMxto2');
+define('UC_FOUNDERSALT', '');
+// define('UC_KEY', 'e8e8F2H9Q5cbdc9aK607F7N4icM1BeO4Mdqabald20dco103ld80wc49be20R5e1');
+define('UC_SITEID', 'L8Z8A2e945EbhcYat627L7s4mc81gem4cdDagatdu0CcI1M3Mdl0Xcc9QeG0v5I1');
+define('UC_MYKEY', '28u802Q9155bCcPa36x7h744AcP11eH4YdXauafdn0Wcm1q3idG0Mcd9deC0D5q1');
+define('UC_DEBUG', false);
+define('UC_PPP', 20);
+define('UC_ONLYREMOTEADDR', 1);
+define('UC_IPGETTER', 'header');
+// define('UC_IPGETTER_HEADER', serialize(array('header' => 'HTTP_X_FORWARDED_FOR')));
