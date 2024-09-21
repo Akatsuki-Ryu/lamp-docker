@@ -40,6 +40,7 @@ class helper_form {
 		global $_G;
 		$censor = discuz_censor::instance();
 		$censor->check($message, $modword);
+		$message = str_replace('  ', '', $message);
 		if(($censor->modbanned() && empty($_G['group']['ignorecensor'])) || (($modasban && !empty($_G['setting']['modasban'])) && $censor->modmoderated() && empty($_G['group']['ignorecensor']))) {
 			$wordbanned = implode(', ', $censor->words_found);
 			if($return) {
