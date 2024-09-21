@@ -3,5 +3,6 @@
     "CodeGPT.Autocomplete.enabled": true,
     "CodeGPT.Autocomplete.maxTokens": 1024,
     "CodeGPT.Autocomplete.suggestionDelay": 600,
-    "CodeGPT.Autocomplete.provider": "Ollama - deepseek-coder:base"
+    "CodeGPT.Autocomplete.provider": "Ollama - deepseek-coder:base",
+    "search.useIgnoreFiles": false
 }
