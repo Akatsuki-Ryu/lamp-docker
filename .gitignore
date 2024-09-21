@@ -2,8 +2,12 @@
 mysql_data
 mysql_replica_data
 
-# html
-html
+html/data/*.mp4
+html/data/*.MP4
+html/data/*.apk
+html/data/*.zip
+
+
 
 # other
 .DS_Store
